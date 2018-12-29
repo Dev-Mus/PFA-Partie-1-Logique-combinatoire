@@ -19,26 +19,5 @@ type cl_term =
 	|App of cl_term*cl_term (* l'application d'un CL-terme à un CL-terme donne un CL-terme. *)
 ;; 
 
-
-
-
-(*
-type proposition = 
-Vrai
-  |Faux
-  |Var of string 
-  |ET of proposition * proposition
-  |NEG of proposition 
-  |OU of proposition * proposition
-  |IMPLIQ of proposition * proposition
-  |EQIV of proposition * proposition 
-  |FLECHE of proposition * proposition
-  |BARRE of proposition * proposition
-;;
-*)
-
 let lines = ref 0;;
 let words = ref 0;;
-
-
-

@@ -1,5 +1,5 @@
 open Prop_def;;
-(** Définition de la réduction **)
+(** verfie si on peut simplifie **)
 let rec test = function 
 	|App(App(App((Base S),_),_),_)   (* SXYZ *)
 	|App(App((Base K),_),_) (* KXY *)
@@ -9,12 +9,15 @@ let rec test = function
 	|App(a,b)				-> 	(test a)||(test b)
 	|_						-> false
 ;;
+
 (*
 	@param : cl_term 
 	@return : true si on peut simplifie sinon false
 	val test : cl_term -> bool = <fun>
 
 *)
+
+(** Définition de la réduction **)
 let rec reduction = function (* "left (" *)
 	|App(App(App((Base S),x),y),z)   (* SXYZ → XZ(YZ) *)
 		-> reduction ( App(App(x,z),App(y,z)) )
@@ -39,7 +42,7 @@ let rec reduction = function (* "left (" *)
 	val reduction : cl_term -> cl_term = <fun>
 *)
 
-(* functio d'affichage ...*)
+(* function d'affichage ...*)
 let rec affichier = function
 	|Base K -> print_string "Base_K "
 	|Base S -> print_string "Base_S "
@@ -47,13 +50,14 @@ let rec affichier = function
 	|Var (V x) -> print_string x; print_string " "
 	|App(x,y)  -> print_string "( "; affichier x; print_string " "; affichier y; print_string") ";
 ;; 
+
 (*
 	@param :  cl_term
 	@return : affich prop
 	val reduction : cl_term -> Unit = <fun>
 *)
 
-(* functio d'affichage avec type ...*)
+(* function d'affichage avec type ...*)
 let rec affichiertype = function
 	|Base K -> print_string "(Base K) "
 	|Base S -> print_string "(Base S) "
@@ -61,6 +65,7 @@ let rec affichiertype = function
 	|Var (V x) -> print_string "Var (V \""; print_string x; print_string "\") "
 	|App(x,y)  -> print_string "App( "; affichiertype x; print_string ", "; affichiertype y; print_string") ";
 ;; 
+
 (*
 	@param :  cl_term
 	@return : affich prop
