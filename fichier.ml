@@ -1,5 +1,20 @@
 open Prop_def;;
 (** Définition de la réduction **)
+let rec test = function 
+	|App(App(App((Base S),_),_),_)   (* SXYZ *)
+	|App(App((Base K),_),_) (* KXY *)
+	|App((Base I),_) (* IX *) -> true
+	|App(App(a,b),App(c,d)) -> 	if ((a=c)||(b=d))||(b=c) then true
+								else (test (App(a,b))) || (test (App(a,b)))
+	|App(a,b)				-> 	(test a)||(test b)
+	|_						-> false
+;;
+(*
+	@param : cl_term 
+	@return : true si on peut simplifie sinon false
+	val test : cl_term -> bool = <fun>
+
+*)
 let rec reduction = function (* "left (" *)
 	|App(App(App((Base S),x),y),z)   (* SXYZ → XZ(YZ) *)
 		-> reduction ( App(App(x,z),App(y,z)) )
@@ -11,7 +26,10 @@ let rec reduction = function (* "left (" *)
 		-> 	if a=c then reduction (App(b,d)) (* X → Y ⇒ ZX → ZY *)
 			else 	if b=d then reduction (App(a,c)) (* X → Y ⇒ XZ → YZ *)
 				else 	if b=c then reduction (App(a,d)) (* X → Y et Y → Z ⇒ X → Z *)
-					else App(reduction (App(a,b)), reduction (App(c,d)))
+					else reduction (App(reduction (App(a,b)), reduction (App(c,d))))
+	|App(a,b)-> 	if (test a) then reduction(App(reduction a,b))
+					else if (test b) then reduction(App(a, reduction b))
+						else App(a,b)
 	|x 	-> x	(* X → X *)
 ;;
 
