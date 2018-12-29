@@ -8,7 +8,7 @@ rule token = parse
         | "->"			          { incr words;App} 
 
        	| "("                             {incr words; LPAR}
-	| "Quit."		          { incr words;QUIT}
+	| "exit"		          { incr words;QUIT}
         | "K"                             { incr words; K}
         | "S"                             {incr words ; S}
         | "I"                             {incr words ; I}

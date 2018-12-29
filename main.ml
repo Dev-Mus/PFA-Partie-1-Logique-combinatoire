@@ -13,7 +13,7 @@ let boucle in_channel =
 		Prop_parser.programme Prop_lexer.token lexbuffer in
 			let p = lire_prop_expr () in 
 				let k p = 			
-			print_string "\nla proposition :\t"; affichier p;
+			print_string "\nla proposition :\t"; affichiertype p;
 			print_string "\nla reduction :\t"; affichier (reduction p);
 			print_string "\n\n";
 		  		in 
