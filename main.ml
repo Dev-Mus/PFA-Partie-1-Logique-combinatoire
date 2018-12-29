@@ -11,8 +11,8 @@ let boucle in_channel =
 	let lexbuffer = Lexing.from_channel in_channel in
 			let cl = Prop_parser.programme Prop_lexer.token lexbuffer in 
 				let k p = 			
-			print_string "\nCl_term :\t"; affichier cl;
-			print_string "\nReduction :\t"; affichier (reduction cl);
+			print_string "\nCl_term :\t"; affichier p;
+			print_string "\nReduction :\t"; affichier (reduction p);
 			print_string "\n\n";
 		  		in 
 					k cl ;
